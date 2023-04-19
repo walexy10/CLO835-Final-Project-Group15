@@ -9,10 +9,18 @@ app = Flask(__name__)
 
 DBHOST = os.environ.get("DBHOST") or "localhost"
 DBUSER = os.environ.get("DBUSER") or "root"
-DBPWD = os.environ.get("DBPWD") or "passwors"
+DBPWD = os.environ.get("DBPWD") or "password"
 DATABASE = os.environ.get("DATABASE") or "employees"
 COLOR_FROM_ENV = os.environ.get('APP_COLOR') or "lime"
 DBPORT = int(os.environ.get("DBPORT"))
+
+# Connect to the S3 bucket
+s3 = boto3.resource('s3')
+bucket_name = 'group15bucket'
+bucket = s3.Bucket(bucket_name)
+image = 'Audi.jpg'
+s3_url = f'https://{bucket_name}.s3.amazonaws.com/{image}'
+imageurl = f'https://{bucket_name}.s3.amazonaws.com/{image}'
 
 # Create a connection to the MySQL database
 db_conn = connections.Connection(
@@ -25,6 +33,9 @@ db_conn = connections.Connection(
 )
 output = {}
 table = 'employee';
+
+imageurl= "https://group15bucket.s3.amazonaws.com/Audi.jpg"
+
 
 # Define the supported color codes
 color_codes = {
@@ -47,11 +58,14 @@ COLOR = random.choice(["red", "green", "blue", "blue2", "darkblue", "pink", "lim
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
-    return render_template('addemp.html', color=color_codes[COLOR])
+    imageurl = "https://group15bucket.s3.amazonaws.com/Audi.jpg";
+    s3_url = "s3://group15bucket/Audi.jpg"
+    return render_template('addemp.html', imageurl=imageurl)
 
 @app.route("/about", methods=['GET','POST'])
 def about():
-    return render_template('about.html', color=color_codes[COLOR])
+    imageurl = "https://group15bucket.s3.amazonaws.com/Audi.jpg";
+    return render_template('about.html', imageurl=imageurl)
     
 @app.route("/addemp", methods=['POST'])
 def AddEmp():
@@ -133,4 +147,4 @@ if __name__ == '__main__':
         print("Color not supported. Received '" + COLOR + "' expected one of " + SUPPORTED_COLORS)
         exit(1)
 
-    app.run(host='0.0.0.0',port=8080,debug=True)
+    app.run(host='0.0.0.0',port=81,debug=True)

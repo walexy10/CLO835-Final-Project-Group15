@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from pymysql import connections
+import boto3
 import os
 import random
 import argparse
@@ -14,7 +15,7 @@ DATABASE = os.environ.get("DATABASE") or "employees"
 COLOR_FROM_ENV = os.environ.get('APP_COLOR') or "lime"
 DBPORT = int(os.environ.get("DBPORT"))
 
-# Connect to the S3 bucket
+# Create connection to the S3 bucket
 s3 = boto3.resource('s3')
 bucket_name = 'group15bucket'
 bucket = s3.Bucket(bucket_name)

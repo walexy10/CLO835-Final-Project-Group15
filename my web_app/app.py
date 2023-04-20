@@ -14,7 +14,8 @@ DBPWD = os.environ.get("DBPWD") or "password"
 DATABASE = os.environ.get("DATABASE") or "employees"
 COLOR_FROM_ENV = os.environ.get('APP_COLOR') or "lime"
 DBPORT = int(os.environ.get("DBPORT"))
-
+GROUP_NAME = os.environ.get('Group')
+BACKGROUND_URL = os.environ.get("image") or "No Image Found"
 # Create connection to the S3 bucket
 s3 = boto3.resource('s3')
 bucket_name = 'group15bucket'
@@ -63,10 +64,13 @@ def home():
     s3_url = "s3://group15bucket/Audi.jpg"
     return render_template('addemp.html', imageurl=imageurl)
 
-@app.route("/about", methods=['GET','POST'])
+#@app.route("/about", methods=['GET','POST'])
+#def about():
+ #   imageurl = "https://group15bucket.s3.amazonaws.com/Audi.jpg";
+ #   return render_template('about.html', imageurl=imageurl)
+@app.route("/about", methods=['GET','POST' ])
 def about():
-    imageurl = "https://group15bucket.s3.amazonaws.com/Audi.jpg";
-    return render_template('about.html', imageurl=imageurl)
+    return render_template('about.html', GROUP_NAME=GROUP_NAME, background=BACKGROUND_URL)
     
 @app.route("/addemp", methods=['POST'])
 def AddEmp():

@@ -6,11 +6,10 @@ data:
   image_url: "/image_url"
   app-name: G15APP
   aws-region: us-east-1
+  Group: G15
   name: Group15
-  DBHOST: mysql-g15-service
-  DBPORT: "3306
-  Bucket_linl: "https://group15bucket.s3.amazonaws.com/"
-  image : |
-    {
-      "image_link" : "https://group15bucket.s3.amazonaws.com/Audi.jpg"
-    }
+  DBHOST: mysql-svc-g15
+  DBPORT: "3306"
+  Bucket_link: "https://group15bucket.s3.amazonaws.com/"
+  image: |
+    image_link: "https://group15bucket.s3.amazonaws.com/Audi.jpg"

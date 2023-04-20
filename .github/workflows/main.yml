@@ -1,4 +1,4 @@
-name: Deploy to ECR
+name: Deploy images to ECR 
 
 on: 
   push:

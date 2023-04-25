@@ -16,13 +16,20 @@ COLOR_FROM_ENV = os.environ.get('APP_COLOR') or "lime"
 DBPORT = int(os.environ.get("DBPORT"))
 GROUP_NAME = os.environ.get('Group')
 BACKGROUND_URL = os.environ.get("image") or "No Image Found"
-# Create connection to the S3 bucket
+
+#connect to s3 bucket
 s3 = boto3.resource('s3')
 bucket_name = 'group15bucket'
 bucket = s3.Bucket(bucket_name)
 image = 'Audi.jpg'
+
+# Upload image to S3 bucket
+bucket.upload_file(image, image)
+
+# Generate URL for uploaded image
 s3_url = f'https://{bucket_name}.s3.amazonaws.com/{image}'
-imageurl = f'https://{bucket_name}.s3.amazonaws.com/{image}'
+print(s3_url)
+
 
 # Create a connection to the MySQL database
 db_conn = connections.Connection(
